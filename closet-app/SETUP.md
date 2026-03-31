@@ -33,8 +33,10 @@ npm install
 Create a file called `.env.local` in the `closet-app/` folder:
 
 ```bash
-echo "EXPO_PUBLIC_REMOVEBG_API_KEY=5ehrma55VaAqsjvZFvxgiRod" > .env.local
+echo "EXPO_PUBLIC_REMOVEBG_API_KEY=your_key_here" > .env.local
 ```
+
+Your API key was shared privately in the session — paste it in place of `your_key_here`.
 
 This enables automatic background removal via [remove.bg](https://www.remove.bg/).
 Free tier = 50 photos/month. The app still works without it (keeps original photo).
