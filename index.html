@@ -237,37 +237,60 @@
 
     /* ── SKILLS ── */
     #skills { background: var(--bg2); padding: 6rem 5%; }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+    .skills-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; }
     .sk-card {
-      background: var(--card); border: var(--border);
-      border-radius: var(--radius); padding: 1.25rem;
+      background: #F5BC4B; border: var(--border);
+      border-radius: var(--radius); padding: 1.5rem 1rem;
       box-shadow: var(--shadow);
       transition: transform 0.15s, box-shadow 0.15s;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      aspect-ratio: 1; text-align: center;
     }
     .sk-card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--black); }
-    .sk-icon  { font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .sk-name  { font-weight: 700; font-size: 0.88rem; color: var(--text); margin-bottom: 0.2rem; }
-    .sk-level { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.75rem; }
-    .sk-bar   { height: 5px; background: var(--bg2); border-radius: 3px; overflow: hidden; }
-    .sk-bar-fill {
-      height: 100%; background: var(--accent); border-radius: 3px;
-      animation: fillBar 1.5s ease forwards;
-    }
-    @keyframes fillBar { from { width: 0; } }
+    .sk-card svg { width: 64px; height: 64px; margin-bottom: 0.9rem; }
+    .sk-name  { font-weight: 700; font-size: 0.88rem; color: var(--black); }
 
-    /* ── INTERESTS ── */
-    #interests { background: var(--accent2); padding: 6rem 5%; }
-    .int-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-    .int-card {
-      background: var(--card); border: var(--border);
-      border-radius: var(--radius); padding: 2rem 1.5rem;
-      text-align: center; box-shadow: var(--shadow);
-      transition: transform 0.15s, box-shadow 0.15s;
+    /* ── INTERESTS (carousel) ── */
+    #interests { background: var(--accent2); padding: 5rem 0 4rem; overflow: hidden; }
+    #interests .max-w { max-width: 1100px; margin: 0 auto; padding: 0 5%; }
+    .carousel-viewport {
+      overflow: hidden;
+      padding: 1rem 0 2rem;
+      cursor: grab;
+      user-select: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
     }
-    .int-card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--accent); }
-    .int-icon { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
-    .int-card h4 { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.35rem; }
-    .int-card p  { font-size: 0.77rem; color: var(--muted); line-height: 1.5; }
+    .carousel-viewport:active { cursor: grabbing; }
+    .int-track {
+      display: flex; gap: 1.4rem;
+      width: max-content;
+      animation: scroll-carousel 30s linear infinite;
+      will-change: transform;
+    }
+    .int-track:hover { animation-play-state: paused; }
+    .int-track.dragging { animation: none; }
+    .int-card {
+      flex: 0 0 320px; height: 400px;
+      border: var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), box-shadow 0.4s cubic-bezier(.25,.8,.25,1);
+    }
+    .int-card:hover {
+      transform: scale(1.05) translateY(-6px);
+      box-shadow: 10px 14px 0 var(--black);
+      z-index: 2;
+    }
+    .int-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .int-card:hover img { transform: scale(1.08); }
+    @keyframes scroll-carousel {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
 
     /* ── CONTACT ── */
     #contact { background: var(--black); padding: 6rem 5%; }
@@ -348,10 +371,16 @@
       .hero-tagline { margin: 0.75rem auto 0; }
       .about-grid { grid-template-columns: 1fr; }
       .highlights-grid { grid-template-columns: 1fr 1fr; }
+      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+      .int-card { flex: 0 0 270px; height: 340px; }
       .contact-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       nav .nav-links { display: none; }
       .hero-btns { margin-top: 1.5rem; }
+    }
+    @media (max-width: 500px) {
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .int-card { flex: 0 0 240px; height: 300px; }
     }
   </style>
 </head>
@@ -405,7 +434,7 @@
         <div class="card-body about-text">
           <p>I'm a <strong>Senior Financial Analyst</strong> based in Greensboro, NC, currently at Honda Aircraft Company. My career has taken me across multiple divisions of Honda — from automotive trade policy in Ohio to new model budgeting in Alabama — and internationally to Singapore.</p>
           <p>I specialize in <strong>FP&amp;A, variance analysis, month-end close, and financial reporting</strong>. I bring a mix of GAAP rigor, strong SAP expertise, and a growing toolkit in data visualization through Tableau and Power BI.</p>
-          <p>I'v actively expanding my skill set in <strong>SQL and data analytics</strong>, focusing on the intersection of finance, strategy, and automation.</p>
+          <p>I'm actively expanding my skill set in <strong>SQL and data analytics</strong>, focusing on the intersection of finance, strategy, and automation.</p>
           <div class="about-facts">
             <div class="fact"><div class="fact-icon">🎓</div> B.S. Business Administration — Accounting, University of Arizona</div>
             <div class="fact"><div class="fact-icon">📍</div> Greensboro, North Carolina</div>
@@ -500,16 +529,46 @@
     <div class="section-heading dark">SKILLS &amp; TOOLS</div>
     <p class="section-intro">Finance expertise meets modern data tools — and always expanding.</p>
     <div class="skills-grid">
-      <div class="sk-card"><div class="sk-icon">📊</div><div class="sk-name">SAP Reporting</div><div class="sk-level">Advanced · Certified</div><div class="sk-bar"><div class="sk-bar-fill" style="width:92%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">📈</div><div class="sk-name">Microsoft Excel</div><div class="sk-level">Advanced</div><div class="sk-bar"><div class="sk-bar-fill" style="width:95%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">🔵</div><div class="sk-name">Power BI</div><div class="sk-level">Proficient</div><div class="sk-bar"><div class="sk-bar-fill" style="width:80%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">🟠</div><div class="sk-name">Tableau</div><div class="sk-level">Proficient</div><div class="sk-bar"><div class="sk-bar-fill" style="width:78%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">💰</div><div class="sk-name">Xero Accounting</div><div class="sk-level">Advisor Certified</div><div class="sk-bar"><div class="sk-bar-fill" style="width:85%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">🛒</div><div class="sk-name">SAP Ariba</div><div class="sk-level">Proficient</div><div class="sk-bar"><div class="sk-bar-fill" style="width:75%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">🗄️</div><div class="sk-name">SQL</div><div class="sk-level">Currently Learning</div><div class="sk-bar"><div class="sk-bar-fill" style="width:30%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">🤖</div><div class="sk-name">AI Prompting</div><div class="sk-level">Proficient</div><div class="sk-bar"><div class="sk-bar-fill" style="width:82%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">🎨</div><div class="sk-name">Canva / Photoshop</div><div class="sk-level">Intermediate</div><div class="sk-bar"><div class="sk-bar-fill" style="width:65%"></div></div></div>
-      <div class="sk-card"><div class="sk-icon">🎬</div><div class="sk-name">Final Cut Pro</div><div class="sk-level">Intermediate</div><div class="sk-bar"><div class="sk-bar-fill" style="width:60%"></div></div></div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><rect x="4" y="4" width="56" height="56" rx="6" fill="none" stroke="#111" stroke-width="4"/><text x="32" y="42" text-anchor="middle" font-size="22" font-weight="700" font-family="sans-serif" fill="#111">SAP</text></svg>
+        <div class="sk-name">SAP</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><rect x="6" y="2" width="52" height="60" rx="4" fill="none" stroke="#111" stroke-width="4"/><text x="32" y="40" text-anchor="middle" font-size="28" font-weight="800" font-family="sans-serif" fill="#111">X</text><rect x="6" y="2" width="52" height="16" rx="4" fill="#111"/><text x="32" y="15" text-anchor="middle" font-size="11" font-weight="700" font-family="sans-serif" fill="#F5BC4B">EXCEL</text></svg>
+        <div class="sk-name">Excel</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><rect x="8" y="38" width="10" height="20" rx="2"/><rect x="22" y="24" width="10" height="34" rx="2"/><rect x="36" y="14" width="10" height="44" rx="2"/><rect x="50" y="6" width="10" height="52" rx="2" fill="#111" opacity="0.5"/><circle cx="16" cy="20" r="6" fill="none" stroke="#111" stroke-width="3"/><line x1="20" y1="24" x2="26" y2="30" stroke="#111" stroke-width="3"/></svg>
+        <div class="sk-name">Power BI</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><circle cx="20" cy="28" r="10" fill="#111" opacity="0.9"/><circle cx="44" cy="28" r="10" fill="#111" opacity="0.7"/><circle cx="32" cy="44" r="10" fill="#111" opacity="0.5"/><circle cx="32" cy="28" r="6" fill="#111"/></svg>
+        <div class="sk-name">Tableau</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><circle cx="32" cy="32" r="26" fill="none" stroke="#111" stroke-width="4"/><text x="32" y="42" text-anchor="middle" font-size="28" font-weight="800" font-family="sans-serif" fill="#111">X</text></svg>
+        <div class="sk-name">Xero</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><ellipse cx="32" cy="16" rx="22" ry="10" fill="none" stroke="#111" stroke-width="4"/><path d="M10 16v32c0 5.5 9.8 10 22 10s22-4.5 22-10V16" fill="none" stroke="#111" stroke-width="4"/><ellipse cx="32" cy="32" rx="22" ry="10" fill="none" stroke="#111" stroke-width="4"/></svg>
+        <div class="sk-name">SQL</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><rect x="6" y="6" width="52" height="52" rx="10" fill="none" stroke="#111" stroke-width="4"/><circle cx="24" cy="26" r="5"/><circle cx="40" cy="26" r="5"/><path d="M20 40 Q32 50 44 40" fill="none" stroke="#111" stroke-width="3.5" stroke-linecap="round"/><line x1="32" y1="2" x2="32" y2="10" stroke="#111" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="2" r="3"/></svg>
+        <div class="sk-name">AI Prompting</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><circle cx="22" cy="36" r="16" fill="none" stroke="#111" stroke-width="4"/><circle cx="14" cy="30" r="4"/><circle cx="22" cy="24" r="4"/><circle cx="30" cy="30" r="4"/><circle cx="22" cy="44" r="5.5"/><rect x="38" y="28" width="20" height="6" rx="3" transform="rotate(-45 48 31)"/></svg>
+        <div class="sk-name">Canva</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><rect x="4" y="12" width="56" height="40" rx="4" fill="none" stroke="#111" stroke-width="4"/><polygon points="26,22 26,42 44,32" fill="#111"/><circle cx="12" cy="12" r="4"/><circle cx="24" cy="12" r="4"/><circle cx="36" cy="12" r="4"/></svg>
+        <div class="sk-name">Final Cut Pro</div>
+      </div>
+      <div class="sk-card">
+        <svg viewBox="0 0 64 64" fill="#111"><rect x="8" y="4" width="48" height="56" rx="4" fill="none" stroke="#111" stroke-width="4"/><line x1="16" y1="18" x2="48" y2="18" stroke="#111" stroke-width="3"/><line x1="16" y1="28" x2="40" y2="28" stroke="#111" stroke-width="3"/><line x1="16" y1="38" x2="44" y2="38" stroke="#111" stroke-width="3"/><line x1="16" y1="48" x2="36" y2="48" stroke="#111" stroke-width="3"/></svg>
+        <div class="sk-name">GAAP / Reporting</div>
+      </div>
     </div>
   </div>
 </section>
@@ -519,11 +578,22 @@
   <div class="max-w">
     <div class="section-heading orange">BEYOND THE SPREADSHEET</div>
     <p class="section-intro light">A well-rounded perspective comes from a well-rounded life.</p>
-    <div class="int-grid">
-      <div class="int-card"><span class="int-icon">🏒</span><h4>Hockey</h4><p>Team sport discipline and competitive drive that carries into the workplace.</p></div>
-      <div class="int-card"><span class="int-icon">💻</span><h4>Technology</h4><p>Passionate about computers, AI tools, and how tech is reshaping finance and business.</p></div>
-      <div class="int-card"><span class="int-icon">🏃</span><h4>Health &amp; Wellness</h4><p>Committed to fitness and wellbeing — the mental clarity that powers sharper decisions.</p></div>
-      <div class="int-card"><span class="int-icon">✈️</span><h4>Travel</h4><p>From an international internship in Singapore to a love of new cultures and perspectives.</p></div>
+  </div>
+  <div class="carousel-viewport">
+    <div class="int-track">
+      <div class="int-card"><img src="Hockey.JPG" alt="Hockey" /></div>
+      <div class="int-card"><img src="Me%20flying%20a%20plane.jpeg" alt="Flying a plane" /></div>
+      <div class="int-card"><img src="Singapore%20internship.jpg" alt="Singapore" /></div>
+      <div class="int-card"><img src="Me%20with%20a%20dog.jpeg" alt="With a dog" /></div>
+      <div class="int-card"><img src="Graduation%20photo.jpg" alt="Graduation" /></div>
+      <div class="int-card"><img src="Random%20picture%20of%20me%20in%20college.jpg" alt="College" /></div>
+      <!-- duplicated for seamless infinite loop -->
+      <div class="int-card"><img src="Hockey.JPG" alt="Hockey" /></div>
+      <div class="int-card"><img src="Me%20flying%20a%20plane.jpeg" alt="Flying a plane" /></div>
+      <div class="int-card"><img src="Singapore%20internship.jpg" alt="Singapore" /></div>
+      <div class="int-card"><img src="Me%20with%20a%20dog.jpeg" alt="With a dog" /></div>
+      <div class="int-card"><img src="Graduation%20photo.jpg" alt="Graduation" /></div>
+      <div class="int-card"><img src="Random%20picture%20of%20me%20in%20college.jpg" alt="College" /></div>
     </div>
   </div>
 </section>
@@ -560,6 +630,23 @@
 </footer>
 
 <script>
+  // Carousel drag-to-scroll
+  const viewport = document.querySelector('.carousel-viewport');
+  const track    = document.querySelector('.int-track');
+  let isDown = false, startX, scrollLeft;
+  viewport.addEventListener('mousedown', e => {
+    isDown = true; track.classList.add('dragging');
+    startX = e.pageX - viewport.offsetLeft;
+    scrollLeft = viewport.scrollLeft;
+  });
+  viewport.addEventListener('mouseleave', () => { isDown = false; track.classList.remove('dragging'); });
+  viewport.addEventListener('mouseup',    () => { isDown = false; track.classList.remove('dragging'); });
+  viewport.addEventListener('mousemove',  e => {
+    if (!isDown) return; e.preventDefault();
+    const x = e.pageX - viewport.offsetLeft;
+    viewport.scrollLeft = scrollLeft - (x - startX) * 1.5;
+  });
+
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
