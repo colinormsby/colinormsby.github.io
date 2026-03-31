@@ -198,41 +198,6 @@
     }
     @keyframes fillBar { from { width: 0 } }
 
-    /* Projects */
-    #projects { background: var(--bg); }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-    .project-card {
-      background: var(--card); border: 1px solid var(--border-soft);
-      border-radius: var(--radius); padding: 1.75rem; box-shadow: var(--shadow);
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      position: relative; overflow: hidden;
-    }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .project-card.coming-soon { opacity: 0.7; }
-    .project-card.coming-soon:hover { opacity: 1; }
-    .project-tag {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      background: var(--accent-soft); color: var(--accent2);
-      font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.65rem;
-      border-radius: 100px; letter-spacing: 0.04em; margin-bottom: 1rem;
-    }
-    .project-tag.soon {
-      background: #fef3c7; color: #92400e;
-    }
-    .project-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
-    .project-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; }
-    .project-links { display: flex; gap: 0.75rem; }
-    .project-link {
-      font-size: 0.8rem; font-weight: 600; color: var(--accent);
-      text-decoration: none; display: flex; align-items: center; gap: 0.3rem;
-      transition: opacity 0.2s;
-    }
-    .project-link:hover { opacity: 0.75; }
-    .project-placeholder {
-      position: absolute; top: 1rem; right: 1rem;
-      font-size: 1.4rem; opacity: 0.2;
-    }
-
     /* Interests */
     #interests { background: var(--bg2); }
     .interests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1.1rem; }
@@ -309,7 +274,6 @@
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a class="nav-cta" href="#contact">Get in Touch</a>
@@ -453,48 +417,6 @@
   </div>
 </section>
 
-<!-- Projects -->
-<section id="projects">
-  <div class="max-w">
-    <p class="section-label">Projects &amp; Portfolio</p>
-    <h2 class="section-title">Work in progress.</h2>
-    <p class="section-sub">SQL and data analytics projects coming soon — check back as I build out this section.</p>
-    <div class="projects-grid">
-
-      <div class="project-card coming-soon">
-        <span class="project-placeholder">🗄️</span>
-        <span class="project-tag soon">⏳ Coming Soon</span>
-        <h3>SQL Project #1</h3>
-        <p>A data analysis project exploring financial datasets using SQL — querying, aggregating, and surfacing insights from real-world data structures.</p>
-        <div class="project-links">
-          <span style="font-size:0.8rem; color:var(--text-muted);">Link coming soon</span>
-        </div>
-      </div>
-
-      <div class="project-card coming-soon">
-        <span class="project-placeholder">🍊</span>
-        <span class="project-tag soon">⏳ Coming Soon</span>
-        <h3>SQL Project #2</h3>
-        <p>Financial reporting and variance analysis built in SQL — translating the kind of FP&amp;A work I do day-to-day into queryable, reproducible code.</p>
-        <div class="project-links">
-          <span style="font-size:0.8rem; color:var(--text-muted);">Link coming soon</span>
-        </div>
-      </div>
-
-      <div class="project-card coming-soon">
-        <span class="project-placeholder">📈</span>
-        <span class="project-tag soon">⏳ Coming Soon</span>
-        <h3>Data Visualization Dashboard</h3>
-        <p>An interactive dashboard combining SQL queries with Power BI or Tableau to visualize key financial metrics and business performance.</p>
-        <div class="project-links">
-          <span style="font-size:0.8rem; color:var(--text-muted);">Link coming soon</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- Interests -->
 <section id="interests">
   <div class="max-w">
@@ -553,7 +475,7 @@
       e.preventDefault();
       const name = document.getElementById('name').value;
       const subject = document.getElementById('subject').value || 'Message from your website';
-      const message = document.getElementById('message").value;
+      const message = document.getElementById('message').value;
       window.location.href = 'mailto:cqorms@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent('Hi Colin,\n\n' + message + '\n\n— ' + name);
     }
   });
