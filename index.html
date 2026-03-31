@@ -15,6 +15,8 @@
       --card:      #FEFCF8;
       --accent:    #0D9488;
       --accent-dk: #0A7470;
+      --accent2:   #E85D26;
+      --accent2-dk:#C44D1F;
       --black:     #111111;
       --text:      #111111;
       --muted:     #5A5852;
@@ -55,6 +57,7 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
+    .nav-ctas { display: flex; gap: 0.6rem; align-items: center; }
     .nav-cta {
       background: var(--accent); color: #fff;
       padding: 0.5rem 1.2rem;
@@ -66,6 +69,17 @@
       transition: all 0.15s;
     }
     .nav-cta:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--black); }
+    .nav-cta-li {
+      background: var(--accent2); color: #fff;
+      padding: 0.5rem 1.2rem;
+      border: var(--border); border-radius: 8px;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 3px 3px 0 var(--black);
+      transition: all 0.15s;
+    }
+    .nav-cta-li:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--black); }
 
     /* ── HERO ── */
     #hero {
@@ -110,7 +124,7 @@
       display: flex; align-items: center; gap: 2.5rem;
     }
     .hero-photo {
-      width: 115px; height: 115px;
+      width: 160px; height: 160px;
       border-radius: 50%;
       border: var(--border);
       box-shadow: 4px 4px 0 var(--black);
@@ -156,9 +170,11 @@
       letter-spacing: 4px; line-height: 0.9;
       margin-bottom: 2rem;
     }
-    .section-heading.light { color: #fff; }
-    .section-heading.dark  { color: var(--text); }
+    .section-heading.light  { color: #fff; }
+    .section-heading.dark   { color: var(--text); }
+    .section-heading.orange { color: #fff; }
     .section-intro { color: var(--muted); max-width: 540px; margin-bottom: 2.5rem; font-size: 0.95rem; }
+    .section-intro.light { color: rgba(255,255,255,0.75); }
 
     /* ── ABOUT ── */
     #about { background: var(--accent); padding: 6rem 5%; }
@@ -240,7 +256,7 @@
     @keyframes fillBar { from { width: 0; } }
 
     /* ── INTERESTS ── */
-    #interests { background: var(--bg); padding: 6rem 5%; }
+    #interests { background: var(--accent2); padding: 6rem 5%; }
     .int-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
     .int-card {
       background: var(--card); border: var(--border);
@@ -248,7 +264,7 @@
       text-align: center; box-shadow: var(--shadow);
       transition: transform 0.15s, box-shadow 0.15s;
     }
-    .int-card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--black); }
+    .int-card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--accent); }
     .int-icon { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
     .int-card h4 { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.35rem; }
     .int-card p  { font-size: 0.77rem; color: var(--muted); line-height: 1.5; }
@@ -349,7 +365,10 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a class="nav-cta" href="Colin_Ormsby_Resume.pdf" download>⬇ Resume</a>
+  <div class="nav-ctas">
+    <a class="nav-cta-li" href="https://www.linkedin.com/in/colin-ormsby" target="_blank">LinkedIn ↗</a>
+    <a class="nav-cta" href="Colin_Ormsby_Resume.pdf" download>⬇ Resume</a>
+  </div>
 </nav>
 
 <!-- Hero -->
@@ -498,8 +517,8 @@
 <!-- Interests -->
 <section id="interests">
   <div class="max-w">
-    <div class="section-heading dark">BEYOND THE SPREADSHEET</div>
-    <p class="section-intro">A well-rounded perspective comes from a well-rounded life.</p>
+    <div class="section-heading orange">BEYOND THE SPREADSHEET</div>
+    <p class="section-intro light">A well-rounded perspective comes from a well-rounded life.</p>
     <div class="int-grid">
       <div class="int-card"><span class="int-icon">🏒</span><h4>Hockey</h4><p>Team sport discipline and competitive drive that carries into the workplace.</p></div>
       <div class="int-card"><span class="int-icon">💻</span><h4>Technology</h4><p>Passionate about computers, AI tools, and how tech is reshaping finance and business.</p></div>
