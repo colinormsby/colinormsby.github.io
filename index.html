@@ -57,32 +57,6 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
-    .nav-research {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      font-size: 0.68rem; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: rgba(17,17,17,0.28);
-      text-decoration: none;
-      padding: 0.3rem 0.6rem;
-      border: 1px solid rgba(17,17,17,0.1);
-      border-radius: 4px;
-      transition: color 0.3s, border-color 0.3s, background 0.3s;
-      position: relative;
-    }
-    .nav-research::before {
-      content: '';
-      display: inline-block;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: currentColor;
-      opacity: 0.5;
-    }
-    .nav-research:hover {
-      color: #00d4ff;
-      border-color: rgba(0,212,255,0.35);
-      background: rgba(0,212,255,0.05);
-    }
-    .nav-research:hover::before { opacity: 1; }
     .nav-ctas { display: flex; gap: 0.6rem; align-items: center; }
     .nav-cta {
       background: var(--accent); color: #fff;
@@ -421,7 +395,6 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-ctas">
-    <a class="nav-research" href="/rocketlab.html" title="RKLB Equity Research">⬡ Research</a>
     <a class="nav-cta-li" href="https://www.linkedin.com/in/colin-ormsby" target="_blank">LinkedIn ↗</a>
     <a class="nav-cta" href="Colin_Ormsby_Resume.pdf" download>⬇ Resume</a>
   </div>
