@@ -57,6 +57,25 @@
   }
   .container { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 32px; }
 
+  /* DOWNLOAD BAR */
+  .download-bar {
+    position: relative; z-index: 2;
+    background: var(--ember-dim);
+    border-bottom: 1px solid rgba(255,112,56,0.2);
+    padding: 11px 32px;
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+  }
+  .dl-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--silver); letter-spacing: 0.05em; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 18px; background: var(--ember); color: #050508;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+    border-radius: 3px; transition: opacity 150ms; flex-shrink: 0;
+  }
+  .dl-btn:hover { opacity: 0.85; }
+  .dl-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
   /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
