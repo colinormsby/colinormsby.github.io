@@ -89,7 +89,9 @@
     display: flex; align-items: center; justify-content: space-between;
     height: 60px; gap: 24px;
   }
-  .nav-brand { display: flex; align-items: center; gap: 16px; }
+  .nav-back { display:flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.06em; text-decoration:none; transition:color 150ms; padding-right:16px; border-right:1px solid var(--border); flex-shrink:0; }
+  .nav-back:hover { color:var(--ember); }
+  .nav-back svg { width:12px; height:12px; flex-shrink:0; }
   .nav-logo-text { font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--white); }
   .nav-sep { width: 1px; height: 20px; background: var(--border-bright); }
   .nav-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
@@ -200,25 +202,30 @@
 
   /* VALUATION */
   .val-grid { display:grid; grid-template-columns:1fr 1.6fr 1fr; gap:2px; background:var(--border); border:1px solid var(--border); }
-  .scenario-card { background:var(--deep); padding:28px 24px; transition:background 200ms var(--ease-out); }
+  .scenario-card { background:var(--deep); padding:28px 24px; transition:background 200ms var(--ease-out); display:flex; flex-direction:column; }
   .scenario-card:nth-child(2) { background:var(--surface); border-left:1px solid rgba(255,112,56,0.2); border-right:1px solid rgba(255,112,56,0.2); }
-  .scenario-tag { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:16px; padding:4px 10px; display:inline-block; border-radius:2px; }
+  .scenario-tag { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:16px; padding:4px 10px; display:inline-block; border-radius:2px; align-self:flex-start; }
   .tag-bear { background:rgba(255,68,68,0.1); color:var(--red-dim); border:1px solid rgba(255,68,68,0.2); }
   .tag-base { background:var(--ember-dim); color:var(--ember); border:1px solid rgba(255,112,56,0.3); }
   .tag-bull { background:rgba(34,197,94,0.1); color:var(--green-dim); border:1px solid rgba(34,197,94,0.2); }
-  .scenario-label { font-family:'Orbitron',monospace; font-size:11px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--white); margin-bottom:24px; }
-  .val-math { display:flex; flex-direction:column; margin-bottom:20px; }
-  .val-line { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; font-family:'JetBrains Mono',monospace; font-size:10px; padding:7px 0; border-bottom:1px solid var(--border); }
+  .scenario-label { font-family:'Orbitron',monospace; font-size:11px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--white); margin-bottom:20px; }
+  .val-math { display:flex; flex-direction:column; margin-bottom:16px; }
+  .val-line { display:flex; justify-content:space-between; align-items:center; gap:12px; font-family:'JetBrains Mono',monospace; font-size:10px; padding:8px 0; border-bottom:1px solid var(--border); }
   .val-line:last-child { border-bottom:none; }
-  .val-line-key { color:var(--muted); flex:1; }
-  .val-line-num { color:var(--white); font-weight:500; text-align:right; flex-shrink:0; }
-  .val-result { padding-top:16px; border-top:1px solid var(--border-bright); }
+  .val-line-key { color:var(--muted); flex:1; white-space:nowrap; }
+  .val-line-num { color:var(--white); font-weight:700; text-align:right; flex-shrink:0; font-size:11px; }
+  /* Scenario assumption note — full-width, readable */
+  .scenario-note { margin-top:4px; margin-bottom:16px; padding:10px 12px; border-radius:3px; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.6; }
+  .scenario-note.bear { background:rgba(255,68,68,0.06); border-left:2px solid var(--red-dim); color:rgba(255,68,68,0.85); }
+  .scenario-note.base { background:var(--ember-glow); border-left:2px solid var(--ember); color:rgba(255,112,56,0.9); }
+  .scenario-note.bull { background:rgba(34,197,94,0.05); border-left:2px solid var(--green-dim); color:rgba(34,197,94,0.85); }
+  .val-result { padding-top:16px; border-top:1px solid var(--border-bright); margin-top:auto; }
   .val-result-label { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px; }
   .val-result-num { font-family:'Orbitron',monospace; font-size:24px; font-weight:900; color:var(--white); margin-bottom:6px; }
   .val-result-num.bear { color:var(--red-dim); }
   .val-result-num.base { color:var(--ember); }
   .val-result-num.bull { color:var(--green-dim); }
-  .val-upside { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); }
+  .val-upside { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); line-height:1.5; }
 
   /* RISK */
   .risk-table { width:100%; border-collapse:collapse; }
@@ -301,10 +308,16 @@
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <div class="nav-brand">
-      <span class="nav-logo-text">SpaceX</span>
-      <div class="nav-sep"></div>
-      <span class="nav-sub">Pre-IPO Intelligence Brief</span>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a class="nav-back" href="https://colinormsby.github.io">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Portfolio
+      </a>
+      <div class="nav-brand">
+        <span class="nav-logo-text">SpaceX</span>
+        <div class="nav-sep"></div>
+        <span class="nav-sub">Pre-IPO Intelligence Brief</span>
+      </div>
     </div>
     <div class="nav-right">
       <div class="valuation-badge">
@@ -516,12 +529,12 @@
           <div class="val-line"><span class="val-line-key">NTM Revenue (2026E)</span><span class="val-line-num">$25.0B</span></div>
           <div class="val-line"><span class="val-line-key">Applied Multiple</span><span class="val-line-num">50×</span></div>
           <div class="val-line"><span class="val-line-key">→ Implied EV</span><span class="val-line-num">$1.25T</span></div>
-          <div class="val-line"><span class="val-line-key">Scenario assumes</span><span class="val-line-num" style="color:var(--red-dim);font-size:9px;text-align:right;">Growth slows; xAI losses persist; Starship delayed</span></div>
         </div>
+        <div class="scenario-note bear">Growth decelerates; xAI losses persist beyond 2027; Starship program delayed 12+ months; subscriber growth slows as market penetration plateaus in Tier-1 markets.</div>
         <div class="val-result">
           <div class="val-result-label">Implied Equity Value</div>
           <div class="val-result-num bear">$1.25T</div>
-          <div class="val-upside">−29% vs. IPO target midpoint</div>
+          <div class="val-upside">−29% vs. IPO target midpoint<br>~50× NTM Revenue</div>
         </div>
       </div>
       <div class="scenario-card">
@@ -531,12 +544,12 @@
           <div class="val-line"><span class="val-line-key">NTM Revenue (2026E)</span><span class="val-line-num">$25.0B</span></div>
           <div class="val-line"><span class="val-line-key">Applied Multiple</span><span class="val-line-num">70×</span></div>
           <div class="val-line"><span class="val-line-key">→ Implied EV</span><span class="val-line-num">$1.75T</span></div>
-          <div class="val-line"><span class="val-line-key">Scenario assumes</span><span class="val-line-num" style="color:var(--ember);font-size:9px;text-align:right;">Starlink 15M subs; Starship commercial; xAI losses narrow</span></div>
         </div>
+        <div class="scenario-note base">Starlink reaches 15M+ subscribers; Starship begins commercial satellite deployments by late 2026; xAI losses narrow as Colossus compute revenue ramps; India market opens 100M+ addressable users within 18 months of approval.</div>
         <div class="val-result">
           <div class="val-result-label">Implied Equity Value</div>
           <div class="val-result-num base">$1.75T</div>
-          <div class="val-upside">Aligns with confidential S-1 filing target range</div>
+          <div class="val-upside">Aligns with confidential S-1 filing target<br>~70× NTM Revenue</div>
         </div>
       </div>
       <div class="scenario-card">
@@ -546,12 +559,12 @@
           <div class="val-line"><span class="val-line-key">NTM Revenue (2026E)</span><span class="val-line-num">$25.0B</span></div>
           <div class="val-line"><span class="val-line-key">Applied Multiple</span><span class="val-line-num">100×</span></div>
           <div class="val-line"><span class="val-line-key">→ Implied EV</span><span class="val-line-num">$2.5T</span></div>
-          <div class="val-line"><span class="val-line-key">Scenario assumes</span><span class="val-line-num" style="color:var(--green-dim);font-size:9px;text-align:right;">AI compute monetizes; D2C mobile scales; India + emerging markets unlock</span></div>
         </div>
+        <div class="scenario-note bull">Colossus orbital AI compute monetizes ahead of schedule; Direct-to-Cell mobile scales to 25M+ MAUs; Starlink gains meaningful market share in India and Southeast Asia; Starship achieves 2-week cadence enabling Gen 3 constellation with dramatically lower unit economics.</div>
         <div class="val-result">
           <div class="val-result-label">Implied Equity Value</div>
           <div class="val-result-num bull">$2.5T</div>
-          <div class="val-upside">+43% vs. target; near Nvidia-class</div>
+          <div class="val-upside">+43% vs. IPO target; near Nvidia-class<br>~100× NTM Revenue</div>
         </div>
       </div>
     </div>
