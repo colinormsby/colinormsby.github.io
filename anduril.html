@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ANDURIL INDUSTRIES — Private Intelligence Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@200;300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050505;--ink:#0c0c0c;--plate:#141414;--rail:#1e1e1e;
+  --border:#282828;--wire:#333;--dim:#4a4744;--ghost:#6b6864;
+  --fog:#c8c0b8;--paper:#ede8e0;
+  --gold:#c8a86b;--gold-lo:rgba(200,168,107,.09);--gold-mid:rgba(200,168,107,.22);
+  --red:#a84040;--green:#4a8055;
+  --ease:cubic-bezier(.23,1,.32,1);--ease-io:cubic-bezier(.77,0,.175,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--void);color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;overflow-x:hidden;cursor:crosshair}
+/* scanlines */
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.1) 2px,rgba(0,0,0,.1) 4px);pointer-events:none;z-index:9998;mix-blend-mode:multiply}
+/* noise */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");pointer-events:none;z-index:9997;opacity:.35}
+
+/* TICKER */
+.ticker{background:var(--gold);color:var(--void);height:32px;overflow:hidden;display:flex;align-items:center}
+.ticker-lbl{flex-shrink:0;background:var(--void);color:var(--gold);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:0 16px;height:100%;display:flex;align-items:center;z-index:2;white-space:nowrap}
+.ticker-track{display:flex;align-items:center;animation:tick 44s linear infinite;white-space:nowrap}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ti{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.ti .v{font-weight:400;opacity:.7}
+.tsep{opacity:.35;font-size:13px}
+
+/* NAV */
+nav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;height:56px;padding:0 32px;border-bottom:1px solid var(--border);position:sticky;top:32px;z-index:100;background:rgba(5,5,5,.94);backdrop-filter:blur(16px)}
+.nb{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper)}
+.nb em{color:var(--gold);font-style:normal}
+.nc{display:flex;align-items:center;justify-content:center;gap:6px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.nc span{color:var(--wire)}
+.nr{display:flex;align-items:center;gap:10px}
+.vbadge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--border);background:var(--plate);font-size:10px}
+.vbadge strong{color:var(--gold);font-size:12px}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--dim)}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 420px;min-height:calc(100dvh - 88px);border-bottom:1px solid var(--border);position:relative}
+.hero::before{content:'';position:absolute;top:0;bottom:0;left:calc(100% - 420px - 1px);width:1px;background:linear-gradient(180deg,var(--gold) 0%,var(--border) 55%,transparent 100%);z-index:1}
+.hl{padding:72px 56px 72px 32px;display:flex;flex-direction:column;justify-content:space-between}
+.kicker{display:flex;align-items:center;gap:14px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:32px}
+.kicker::before{content:'';width:40px;height:1px;background:var(--gold)}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(68px,9.5vw,124px);line-height:.88;letter-spacing:-.02em;text-transform:uppercase;color:var(--paper);margin-bottom:40px}
+h1 .s{-webkit-text-stroke:1px var(--wire);color:transparent}
+h1 .g{color:var(--gold)}
+.thesis{font-family:'Instrument Serif',serif;font-size:17px;line-height:1.75;color:var(--fog);max-width:600px;margin-bottom:48px;border-left:2px solid var(--gold);padding-left:20px;font-style:italic}
+.srow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border)}
+.sc{background:var(--void);padding:14px 18px;flex:1;min-width:110px;transition:background 180ms var(--ease)}
+@media(hover:hover)and(pointer:fine){.sc:hover{background:var(--gold-lo)}}
+.sl{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.sv{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;line-height:1;color:var(--paper)}
+.sh{font-size:9px;color:var(--gold);margin-top:4px}
+
+/* hero right */
+.hr{background:var(--ink);display:flex;flex-direction:column;overflow:hidden}
+.rc{flex:1;display:flex;align-items:center;justify-content:center;padding:32px}
+.rsv{width:300px;height:300px}
+.rs{transform-origin:150px 150px;animation:sweep 5s linear infinite}
+@keyframes sweep{to{transform:rotate(360deg)}}
+.rb{opacity:0;animation:blip 5s linear infinite}
+.rb1{animation-delay:.9s}.rb2{animation-delay:2.1s}.rb3{animation-delay:3.4s}.rb4{animation-delay:4.1s}
+@keyframes blip{0%,12%{opacity:0}16%{opacity:1}85%{opacity:.5}100%{opacity:0}}
+.rr{animation:rpulse 5s ease-in-out infinite}
+.rr2{animation-delay:.6s}.rr3{animation-delay:1.2s}.rr4{animation-delay:1.8s}
+@keyframes rpulse{0%,100%{opacity:.1}50%{opacity:.25}}
+.istrip{border-top:1px solid var(--border);display:flex;flex-direction:column}
+.ic{padding:12px 20px;border-bottom:1px solid var(--rail);display:grid;grid-template-columns:80px 1fr;gap:12px;transition:background 150ms}
+@media(hover:hover)and(pointer:fine){.ic:hover{background:var(--plate)}}
+.idt{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);padding-top:2px}
+.itn{font-size:10px;font-weight:600;color:var(--paper);letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.idc{font-size:9px;color:var(--ghost);line-height:1.5}
+
+/* SECTION */
+.sect{padding:64px 32px;border-bottom:1px solid var(--border)}
+.shd{display:flex;align-items:baseline;gap:16px;margin-bottom:40px}
+.snum{font-size:9px;letter-spacing:.2em;color:var(--gold)}
+.stitle{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper)}
+
+/* HUD */
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.hc{background:var(--void);padding:28px 24px;position:relative;transition:background 160ms var(--ease);opacity:0;animation:fup 400ms var(--ease) forwards}
+.hc:nth-child(1){animation-delay:0ms}.hc:nth-child(2){animation-delay:50ms}.hc:nth-child(3){animation-delay:100ms}.hc:nth-child(4){animation-delay:150ms}
+.hc:nth-child(5){animation-delay:80ms}.hc:nth-child(6){animation-delay:130ms}.hc:nth-child(7){animation-delay:180ms}.hc:nth-child(8){animation-delay:230ms}
+@keyframes fup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(hover:hover)and(pointer:fine){.hc:hover{background:var(--ink)}}
+.hc::after{content:'';position:absolute;inset:0;border:1px solid transparent;transition:border-color 250ms var(--ease);pointer-events:none}
+@media(hover:hover)and(pointer:fine){.hc:hover::after{border-color:var(--gold-mid)}}
+.hl2{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.hv{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:36px;line-height:1;color:var(--paper);letter-spacing:-.01em}
+.hv .u{font-size:18px;color:var(--ghost);font-weight:500}
+.hsub{font-size:9px;color:var(--gold);margin-top:6px;letter-spacing:.04em}
+
+/* SEGMENTS */
+.sgg{display:grid;grid-template-columns:2fr 3fr;gap:1px;background:var(--border)}
+.sgp{background:var(--void);padding:40px}.sgp.b{background:var(--ink)}
+.sgn{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.sgb{font-family:'Instrument Serif',serif;font-size:14px;line-height:1.8;color:var(--fog);font-style:italic;margin-bottom:18px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.tag{padding:2px 8px;border:1px solid var(--border);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+/* FIN */
+.fing{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:32px}
+.fc{background:var(--void);padding:32px}
+.fl{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.fv{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:44px;line-height:1;color:var(--paper);margin-bottom:6px}
+.ft{font-size:9px;display:flex;gap:6px;align-items:center}
+.up{color:#6bbd8a}.dn{color:#bd6b6b}
+.rc2{display:flex;align-items:flex-end;gap:8px;height:80px;padding:16px 32px 0;background:var(--plate);border:1px solid var(--border);margin-top:12px}
+.bw{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.bv2{font-size:8px;color:var(--ghost);white-space:nowrap}
+.bar{width:100%;background:var(--rail);border-top:2px solid var(--gold)}
+.bar.hi{border-color:var(--gold);background:var(--gold-lo)}
+.bar.proj{border-style:dashed;border-color:var(--dim)}
+.bl{font-size:7px;color:var(--dim);letter-spacing:.06em;white-space:nowrap}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.pr h4{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pr p{font-family:'Instrument Serif',serif;font-size:14px;line-height:1.75;color:var(--fog);font-style:italic}
+
+/* VALUATION */
+.vg{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:1px;background:var(--border)}
+.vc{background:var(--void);padding:32px;position:relative;overflow:hidden}
+.vc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.vc.bear::before{background:var(--red)}.vc.base::before{background:var(--gold)}.vc.bull::before{background:var(--green)}
+.vs{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:.26em;text-transform:uppercase;margin-bottom:20px}
+.vc.bear .vs{color:#bd6b6b}.vc.base .vs{color:var(--gold)}.vc.bull .vs{color:#6bbd8a}
+.vl{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--rail);font-size:10px}
+.vl:last-of-type{border:none}.vl .k{color:var(--dim)}.vl .v{color:var(--paper);font-weight:600}
+.vl.hi .v{color:var(--gold);font-size:13px}.vl.dv{border-top:1px solid var(--border);padding-top:10px;margin-top:4px}
+.vup{margin-top:16px;padding:10px;background:var(--plate);text-align:center;font-size:9px;color:var(--dim);letter-spacing:.06em}
+.ups{display:block;margin-top:3px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px}
+.vc.bear .ups{color:#bd6b6b}.vc.base .ups{color:var(--gold)}.vc.bull .ups{color:#6bbd8a}
+.vnote{margin-top:24px;padding:16px 20px;border:1px solid var(--border);background:var(--plate);font-size:9px;color:var(--dim);line-height:1.7}
+
+/* THESIS */
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.tc2{background:var(--void);padding:36px}.tc2.b{background:var(--ink)}
+.th{display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px}
+.th.g{color:#6bbd8a}.th.r{color:#bd6b6b}
+.th::before{content:'';width:20px;height:1px}
+.th.g::before{background:#6bbd8a}.th.r::before{background:#bd6b6b}
+.tl{list-style:none;display:flex;flex-direction:column;gap:12px}
+.tl li{font-size:12px;line-height:1.65;color:var(--fog);padding-left:14px;border-left:1px solid var(--rail)}
+.tl li strong{color:var(--paper);font-weight:600;display:block;margin-bottom:2px;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+
+/* RISK */
+.rt{width:100%;border-collapse:collapse}
+.rt th{text-align:left;padding:8px 14px;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--border)}
+.rt td{padding:14px;border-bottom:1px solid var(--rail);vertical-align:top}
+.rt tr:last-child td{border:none}
+@media(hover:hover)and(pointer:fine){.rt tr:hover td{background:var(--plate)}}
+.sev{display:inline-block;padding:2px 7px;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.H{background:rgba(168,64,64,.2);color:#bd6b6b;border:1px solid rgba(168,64,64,.35)}
+.M{background:rgba(200,168,107,.13);color:var(--gold);border:1px solid rgba(200,168,107,.28)}
+.L{background:rgba(74,128,85,.18);color:#6bbd8a;border:1px solid rgba(74,128,85,.3)}
+.rn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--paper)}
+.rd{font-size:11px;color:var(--ghost);line-height:1.55;margin-top:3px}
+
+/* CATALYSTS */
+.clist{display:flex;flex-direction:column}
+.cit{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--rail);transition:background 130ms}
+.cit:last-child{border:none}
+@media(hover:hover)and(pointer:fine){.cit:hover{background:var(--ink)}}
+.cdt{padding:18px 20px 18px 0;border-right:1px solid var(--rail);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center}
+.cb{padding:18px 20px}
+.cn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--paper);margin-bottom:3px}
+.cd{font-size:11px;color:var(--ghost);line-height:1.55}
+.ct{display:inline-block;padding:2px 7px;margin-top:5px;font-size:8px;letter-spacing:.1em;text-transform:uppercase}
+.co{background:rgba(200,168,107,.1);color:var(--gold)}.cp{background:rgba(74,128,85,.12);color:#6bbd8a}
+.cf{background:rgba(100,120,200,.12);color:#8098d4}.cfa{background:rgba(180,120,60,.12);color:#c09060}
+
+/* SOURCES */
+.sw{padding:56px 32px;background:var(--ink);border-top:1px solid var(--border)}
+.sl2{display:flex;flex-direction:column;gap:6px;margin-bottom:40px}
+.si{display:flex;gap:14px;align-items:baseline;font-size:10px;color:var(--ghost)}
+.sn{color:var(--gold);min-width:22px}
+.si a{color:var(--ghost);text-decoration:none;border-bottom:1px solid var(--wire);transition:color 160ms,border-color 160ms}
+.si a:hover{color:var(--gold);border-color:var(--gold)}
+.vt{width:100%;border-collapse:collapse}
+.vt th{text-align:left;padding:8px 12px;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--border)}
+.vt td{padding:10px 12px;font-size:10px;color:var(--ghost);border-bottom:1px solid var(--rail)}
+.vt tr:last-child td{border:none}
+.ok{color:#6bbd8a}.est{color:var(--gold)}
+
+/* FOOTER */
+footer{padding:20px 32px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--dim);letter-spacing:.06em;flex-wrap:wrap;gap:8px}
+.bk{color:var(--wire);text-decoration:none;font-size:9px;letter-spacing:.06em;transition:color 160ms;border-bottom:1px solid var(--rail)}
+.bk:hover{color:var(--dim)}
+
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr}.hero::before{display:none}.hr{display:none}
+  .hud{grid-template-columns:repeat(2,1fr)}
+  .vg,.sgg,.tg,.tc,.fing{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-lbl">LIVE FEED</div>
+  <div class="ticker-track">
+    <div class="ti">ARMY CONTRACT <span class="v">$20B / 10-YR</span></div><span class="tsep">·</span>
+    <div class="ti">IVAS PROGRAM <span class="v">$22B CEILING</span></div><span class="tsep">·</span>
+    <div class="ti">2025 REVENUE EST <span class="v">~$2.1B (+110% YoY)</span></div><span class="tsep">·</span>
+    <div class="ti">2026 PROJECTION <span class="v">$4.3B</span></div><span class="tsep">·</span>
+    <div class="ti">VALUATION MAR '26 <span class="v">$60.0B</span></div><span class="tsep">·</span>
+    <div class="ti">ARSENAL-1 FURY LINE <span class="v">OPERATIONAL</span></div><span class="tsep">·</span>
+    <div class="ti">SERIES G <span class="v">FOUNDERS FUND $1B</span></div><span class="tsep">·</span>
+    <div class="ti">NTM REV MULTIPLE <span class="v">~14×</span></div><span class="tsep">·</span>
+    <div class="ti">SRM FACTORY MS <span class="v">6K MOTORS/YR</span></div><span class="tsep">·</span>
+    <div class="ti">YFQ-44A FURY <span class="v">MAIDEN FLT OCT '25</span></div><span class="tsep">·</span>
+    <div class="ti">ARMY CONTRACT <span class="v">$20B / 10-YR</span></div><span class="tsep">·</span>
+    <div class="ti">IVAS PROGRAM <span class="v">$22B CEILING</span></div><span class="tsep">·</span>
+    <div class="ti">2025 REVENUE EST <span class="v">~$2.1B (+110% YoY)</span></div><span class="tsep">·</span>
+    <div class="ti">2026 PROJECTION <span class="v">$4.3B</span></div><span class="tsep">·</span>
+    <div class="ti">VALUATION MAR '26 <span class="v">$60.0B</span></div><span class="tsep">·</span>
+    <div class="ti">ARSENAL-1 FURY LINE <span class="v">OPERATIONAL</span></div><span class="tsep">·</span>
+    <div class="ti">SERIES G <span class="v">FOUNDERS FUND $1B</span></div><span class="tsep">·</span>
+    <div class="ti">NTM REV MULTIPLE <span class="v">~14×</span></div><span class="tsep">·</span>
+    <div class="ti">SRM FACTORY MS <span class="v">6K MOTORS/YR</span></div><span class="tsep">·</span>
+    <div class="ti">YFQ-44A FURY <span class="v">MAIDEN FLT OCT '25</span></div><span class="tsep">·</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nb">ANDURIL <em>INDUSTRIES</em></div>
+  <div class="nc"><span>PRIVATE</span><span>·</span><span>DEFENSE TECHNOLOGY</span><span>·</span><span>COSTA MESA, CA</span><span>·</span><span>EST. 2017</span></div>
+  <div class="nr">
+    <div class="vbadge">
+      <span style="font-size:8px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase">VALUATION</span>
+      <strong>$60.0B</strong>
+      <div class="sdot" title="Private — secondary market implied"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hl">
+    <div>
+      <div class="kicker">Program Financial Analyst — Autonomous Airpower</div>
+      <h1>
+        <span class="s">RE</span><span class="g">WRIT</span><span class="s">ING</span><br>
+        THE<br>
+        <span id="scr">DEFENSE</span><br>
+        <span class="s">BASE</span>
+      </h1>
+      <p class="thesis">Anduril Industries transforms U.S. and allied military capability through autonomous systems, AI, and commercial-scale manufacturing. Founded 2017, the company has grown from zero to an estimated $2.1B in revenue by 2025 — doubling annually for three consecutive years, faster than any defense startup in history.</p>
+    </div>
+    <div class="srow">
+      <div class="sc"><div class="sl">2024 Rev (Est.)</div><div class="sv">$1.0B</div><div class="sh">↑ ~100% YoY</div></div>
+      <div class="sc"><div class="sl">2025 Rev (Est.)</div><div class="sv">$2.1B</div><div class="sh">↑ ~110% YoY</div></div>
+      <div class="sc"><div class="sl">Valuation</div><div class="sv">$60B</div><div class="sh">Mar '26 round</div></div>
+      <div class="sc"><div class="sl">Army Contract</div><div class="sv">$20B</div><div class="sh">10-year ceiling</div></div>
+      <div class="sc"><div class="sl">Total Funding</div><div class="sv">$6.9B</div><div class="sh">14 rounds</div></div>
+      <div class="sc"><div class="sl">IVAS Program</div><div class="sv">$22B</div><div class="sh">Ex-MSFT Feb '25</div></div>
+    </div>
+  </div>
+
+  <div class="hr">
+    <div class="rc">
+      <svg class="rsv" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8a86b" stop-opacity=".12"/>
+            <stop offset="100%" stop-color="#c8a86b" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="sg" x1="150" y1="150" x2="300" y2="150" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#c8a86b" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#c8a86b" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect width="300" height="300" fill="#0a0a0a"/>
+        <circle cx="150" cy="150" r="148" fill="url(#rg)"/>
+        <line x1="150" y1="4" x2="150" y2="296" stroke="#c8a86b" stroke-width=".4" opacity=".1"/>
+        <line x1="4" y1="150" x2="296" y2="150" stroke="#c8a86b" stroke-width=".4" opacity=".1"/>
+        <line x1="45" y1="45" x2="255" y2="255" stroke="#c8a86b" stroke-width=".4" opacity=".07"/>
+        <line x1="255" y1="45" x2="45" y2="255" stroke="#c8a86b" stroke-width=".4" opacity=".07"/>
+        <circle class="rr" cx="150" cy="150" r="37" fill="none" stroke="#c8a86b" stroke-width=".7"/>
+        <circle class="rr rr2" cx="150" cy="150" r="74" fill="none" stroke="#c8a86b" stroke-width=".7"/>
+        <circle class="rr rr3" cx="150" cy="150" r="111" fill="none" stroke="#c8a86b" stroke-width=".7"/>
+        <circle class="rr rr4" cx="150" cy="150" r="145" fill="none" stroke="#c8a86b" stroke-width=".7"/>
+        <circle cx="150" cy="150" r="147" fill="none" stroke="#c8a86b" stroke-width="1.2" opacity=".35"/>
+        <g class="rs">
+          <path d="M150,150 L298,150" stroke="url(#sg)" stroke-width="1.8"/>
+          <path d="M150,150 L298,150" stroke="#c8a86b" stroke-width=".5" opacity=".25" transform="rotate(-12,150,150)"/>
+          <path d="M150,150 L298,150" stroke="#c8a86b" stroke-width=".3" opacity=".12" transform="rotate(-25,150,150)"/>
+          <path d="M150,150 L298,150 A148,148 0 0,0 150,2 Z" fill="#c8a86b" opacity=".025"/>
+        </g>
+        <g class="rb rb1">
+          <circle cx="220" cy="97" r="4" fill="#c8a86b"/>
+          <circle cx="220" cy="97" r="9" fill="none" stroke="#c8a86b" stroke-width=".8" opacity=".5"/>
+          <text x="231" y="94" font-family="JetBrains Mono" font-size="7" fill="#c8a86b" opacity=".85">FURY</text>
+          <text x="231" y="103" font-family="JetBrains Mono" font-size="6" fill="#c8a86b" opacity=".5">YFQ-44A</text>
+        </g>
+        <g class="rb rb2">
+          <circle cx="107" cy="207" r="3.5" fill="#c8a86b"/>
+          <circle cx="107" cy="207" r="8" fill="none" stroke="#c8a86b" stroke-width=".8" opacity=".4"/>
+          <text x="77" y="203" font-family="JetBrains Mono" font-size="7" fill="#c8a86b" opacity=".8">GHOST-X</text>
+        </g>
+        <g class="rb rb3">
+          <circle cx="245" cy="195" r="3" fill="#c8a86b"/>
+          <circle cx="245" cy="195" r="7" fill="none" stroke="#c8a86b" stroke-width=".8" opacity=".4"/>
+          <text x="255" y="198" font-family="JetBrains Mono" font-size="6" fill="#c8a86b" opacity=".7">ALTIUS</text>
+        </g>
+        <g class="rb rb4">
+          <circle cx="82" cy="112" r="3.5" fill="#c8a86b"/>
+          <circle cx="82" cy="112" r="8" fill="none" stroke="#c8a86b" stroke-width=".8" opacity=".4"/>
+          <text x="50" y="108" font-family="JetBrains Mono" font-size="6" fill="#c8a86b" opacity=".75">RDRNR-M</text>
+        </g>
+        <circle cx="150" cy="150" r="4" fill="#c8a86b" opacity=".9"/>
+        <circle cx="150" cy="150" r="9" fill="none" stroke="#c8a86b" stroke-width=".8" opacity=".5"/>
+        <text x="160" y="147" font-family="JetBrains Mono" font-size="7" fill="#c8a86b" opacity=".7">LATTICE</text>
+        <text x="160" y="157" font-family="JetBrains Mono" font-size="6" fill="#c8a86b" opacity=".4">C2 NODE</text>
+        <text x="153" y="115" font-family="JetBrains Mono" font-size="6" fill="#c8a86b" opacity=".22">50km</text>
+        <text x="153" y="78" font-family="JetBrains Mono" font-size="6" fill="#c8a86b" opacity=".18">100km</text>
+        <text x="8" y="16" font-family="JetBrains Mono" font-size="7" fill="#c8a86b" opacity=".22">AA SECTOR</text>
+        <text x="8" y="293" font-family="JetBrains Mono" font-size="7" fill="#c8a86b" opacity=".18">4× ACTIVE</text>
+        <text x="220" y="293" font-family="JetBrains Mono" font-size="7" fill="#c8a86b" opacity=".18">ARSENAL-1</text>
+      </svg>
+    </div>
+    <div class="istrip">
+      <div class="ic"><div class="idt">Mar 2026</div><div><div class="itn">$20B Army Contract</div><div class="idc">10-year Lattice enterprise — 120+ actions consolidated</div></div></div>
+      <div class="ic"><div class="idt">Mar 2026</div><div><div class="itn">Fury Production Live</div><div class="idc">Arsenal-1 manufacturing line operational, 150 ac/yr</div></div></div>
+      <div class="ic"><div class="idt">Oct 2025</div><div><div class="itn">YFQ-44A Maiden Flight</div><div class="idc">Fury enters USAF Collaborative Combat Aircraft competition</div></div></div>
+      <div class="ic"><div class="idt">Feb 2025</div><div><div class="itn">IVAS from Microsoft</div><div class="idc">$22B Army AR/VR headset program, up to 121,000 units</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HUD -->
+<section style="border-bottom:1px solid var(--border)">
+  <div style="padding:18px 32px;border-bottom:1px solid var(--rail);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)">
+    <span style="color:var(--gold)">// </span>FINANCIAL TELEMETRY — FY2024/2025 ESTIMATES · FY2026 PROJECTIONS
+  </div>
+  <div class="hud">
+    <div class="hc"><div class="hl2">2024 Revenue (Est.)</div><div class="hv">$1.0<span class="u">B</span></div><div class="hsub">↑ ~100% YoY from ~$500M FY23</div></div>
+    <div class="hc"><div class="hl2">2025 Revenue (Est.)</div><div class="hv">$2.1<span class="u">B</span></div><div class="hsub">↑ ~110% YoY — Sacra estimate</div></div>
+    <div class="hc"><div class="hl2">2026 Revenue (Proj.)</div><div class="hv">$4.3<span class="u">B</span></div><div class="hsub">Company guidance per The Information</div></div>
+    <div class="hc"><div class="hl2">Latest Valuation</div><div class="hv">$60<span class="u">B</span></div><div class="hsub">Mar '26 — a16z + Thrive Capital</div></div>
+    <div class="hc"><div class="hl2">Total Funding</div><div class="hv">$6.9<span class="u">B</span></div><div class="hsub">14 rounds since 2017 founding</div></div>
+    <div class="hc"><div class="hl2">Net Cash (Q1 '24 Est.)</div><div class="hv">~$750<span class="u">M</span></div><div class="hsub">Net loss &gt;$800M p.a. (pre-prod phase)</div></div>
+    <div class="hc"><div class="hl2">Army Contract Ceiling</div><div class="hv">$20<span class="u">B</span></div><div class="hsub">10-yr enterprise, awarded Mar 2026</div></div>
+    <div class="hc"><div class="hl2">NTM Rev Multiple</div><div class="hv">~14<span class="u">×</span></div><div class="hsub">$60B ÷ $4.3B 2026E revenue</div></div>
+  </div>
+</section>
+
+<!-- SEGMENTS -->
+<section class="sect">
+  <div class="shd"><span class="snum">01</span><h2 class="stitle">Business Segments</h2></div>
+  <div class="sgg">
+    <div class="sgp">
+      <div class="sgn">Autonomous Airpower</div>
+      <p class="sgb">Anduril's fastest-scaling segment. Develops and manufactures next-generation unmanned aircraft including the Fury CCA, Roadrunner-M interceptor, ALTIUS loitering munitions, and Ghost ISR platforms. Arsenal-1 in Columbus, Ohio — a 5M sq ft factory — is producing Fury today, targeting automotive-scale production of thousands of units annually at full ramp. The YFQ-44A "Fury" made its maiden flight October 2025 and is in active competition with General Atomics for the USAF CCA program.</p>
+      <div class="tags"><span class="tag">Fury / YFQ-44A</span><span class="tag">Roadrunner-M</span><span class="tag">ALTIUS-600/700</span><span class="tag">Ghost-X</span><span class="tag">Barracuda</span><span class="tag">Arsenal-1</span></div>
+    </div>
+    <div class="sgp b">
+      <div class="sgn">Lattice Platform + CUAS</div>
+      <p class="sgb">Lattice OS is the crown jewel — an AI command-and-control platform fusing thousands of sensor streams into a real-time 3D battlespace picture. The U.S. Army's $20B enterprise contract consolidates 120+ procurement actions under a single Anduril relationship. Counter-UAS includes Pulsar EW systems, Anvil interceptors, and Sentry towers deployed along the U.S. southern border ($2B IDIQ, ~$818M obligated). In February 2025, Anduril assumed Microsoft's $22B IVAS AR/VR headset program for the Army — up to 121,000 units pending combat test approval.</p>
+      <div class="tags"><span class="tag">Lattice OS</span><span class="tag">Pulsar EW</span><span class="tag">Anvil CUAS</span><span class="tag">Sentry Tower</span><span class="tag">IVAS (AR/VR)</span><span class="tag">Dive-LD</span><span class="tag">SRM Factory</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="sect">
+  <div class="shd"><span class="snum">02</span><h2 class="stitle">Financial Snapshot</h2></div>
+  <div class="fing">
+    <div class="fc">
+      <div class="fl">Revenue Trajectory</div>
+      <div class="fv">$1.0B<span style="font-size:20px;color:var(--ghost)"> FY24</span></div>
+      <div class="ft"><span class="up">↑ ~100% YoY</span><span style="color:var(--dim)">from ~$500M FY23</span></div>
+      <div class="rc2">
+        <div class="bw"><div class="bv2">$236M</div><div class="bar" style="height:8px"></div><div class="bl">FY22E</div></div>
+        <div class="bw"><div class="bv2">$500M</div><div class="bar" style="height:18px"></div><div class="bl">FY23E</div></div>
+        <div class="bw"><div class="bv2">$1.0B</div><div class="bar" style="height:35px"></div><div class="bl">FY24E</div></div>
+        <div class="bw"><div class="bv2">$2.1B</div><div class="bar hi" style="height:56px"></div><div class="bl">FY25E</div></div>
+        <div class="bw"><div class="bv2">$4.3B</div><div class="bar proj" style="height:80px"></div><div class="bl">FY26P</div></div>
+      </div>
+    </div>
+    <div class="fc">
+      <div class="fl">Net Loss (Est.)</div>
+      <div class="fv" style="color:#bd6b6b">&gt;$800M</div>
+      <div class="ft"><span class="dn">Heavy R&amp;D + Arsenal-1 capex</span></div>
+      <div style="margin-top:16px;padding:14px;background:var(--plate);border:1px solid var(--border)">
+        <p style="font-size:9px;color:var(--dim);line-height:1.7">Anduril self-funds R&amp;D upfront — no cost-plus contracts. All dev spend hits the income statement before revenue recognition on large multi-year contracts. Arsenal-1 ($1B+ campus) represents significant pre-production capex. Losses are strategic — the finance team's job is maintaining EAC/ETC discipline on exactly these structures.</p>
+      </div>
+    </div>
+    <div class="fc">
+      <div class="fl">Contract Backlog</div>
+      <div class="fv">$1.5B<span style="font-size:20px;color:var(--ghost)"> ACV</span></div>
+      <div class="ft"><span class="up">Annual contract value</span><span style="color:var(--dim)"> + $20B ceiling</span></div>
+      <div style="margin-top:16px;padding:14px;background:var(--plate);border:1px solid var(--border)">
+        <p style="font-size:9px;color:var(--dim);line-height:1.7">Key awards: $20B Army Lattice (10yr), $22B IVAS, $2B border IDIQ (~$818M obligated), $642M USMC cUAS, $250M Roadrunner-M DoD production.</p>
+      </div>
+    </div>
+  </div>
+  <div class="tc">
+    <div class="pr"><h4>Business Model</h4><p>Unlike traditional primes who collect cost-plus margins, Anduril self-funds development and sells finished products. This commercial model compresses timelines from years to months and creates recurring upgrade revenue via Lattice OS — essentially defense SaaS bundled with hardware.</p></div>
+    <div class="pr"><h4>Capital Structure</h4><p>Privately held. ~$6.9B across 14 rounds. Key investors: Founders Fund ($1B Series G), a16z, General Catalyst, Fidelity, Sands Capital, Baillie Gifford. Current $4B round at $60B led by a16z + Thrive. IPO expected 2026–2027.</p></div>
+  </div>
+</section>
+
+<!-- VALUATION -->
+<section class="sect">
+  <div class="shd"><span class="snum">03</span><h2 class="stitle">Valuation Model — EV / NTM Revenue</h2></div>
+  <p style="font-size:9px;color:var(--dim);margin-bottom:28px;max-width:680px;line-height:1.7">Private company. Scenarios model implied equity value using EV/NTM Revenue. Base multiple anchored at March 2026 implied ~14× ($60B ÷ $4.3B 2026E). Bear = multiple contraction; Bull = expansion toward software comps (PLTR ~75×). Upside relative to $60B secondary mark.</p>
+  <div class="vg">
+    <div class="vc bear">
+      <div class="vs">◆ Bear Case</div>
+      <div class="vl"><span class="k">NTM Rev (2026E)</span><span class="v">$3.5B</span></div>
+      <div class="vl"><span class="k">Applied Multiple</span><span class="v">9×</span></div>
+      <div class="vl dv"><span class="k">→ Implied EV</span><span class="v">$31.5B</span></div>
+      <div class="vl"><span class="k">Net Cash (Est.)</span><span class="v">+$500M</span></div>
+      <div class="vl hi"><span class="k">→ Implied Equity</span><span class="v">~$32B</span></div>
+      <div class="vup">DOWNSIDE FROM $60B<span class="ups">-47%</span></div>
+      <div style="margin-top:14px;font-size:9px;color:var(--dim);line-height:1.6">Arsenal-1 delays · CCA loss · IVAS test failure · defense budget cuts</div>
+    </div>
+    <div class="vc base">
+      <div class="vs">◆◆ Base Case</div>
+      <div class="vl"><span class="k">NTM Rev (2026E)</span><span class="v">$4.3B</span></div>
+      <div class="vl"><span class="k">Applied Multiple</span><span class="v">14×</span></div>
+      <div class="vl dv"><span class="k">→ Implied EV</span><span class="v">$60.2B</span></div>
+      <div class="vl"><span class="k">Net Cash (Est.)</span><span class="v">+$1.5B</span></div>
+      <div class="vl hi"><span class="k">→ Implied Equity</span><span class="v">~$61.7B</span></div>
+      <div class="vup">FROM $60B IMPLIED<span class="ups">+3%</span></div>
+      <div style="margin-top:14px;font-size:9px;color:var(--dim);line-height:1.6">Guidance achieved · Army $20B ramps · IVAS passes tests · Fury advances in CCA competition</div>
+    </div>
+    <div class="vc bull">
+      <div class="vs">◆◆◆ Bull Case</div>
+      <div class="vl"><span class="k">NTM Rev (2026E)</span><span class="v">$5.5B</span></div>
+      <div class="vl"><span class="k">Applied Multiple</span><span class="v">20×</span></div>
+      <div class="vl dv"><span class="k">→ Implied EV</span><span class="v">$110B</span></div>
+      <div class="vl"><span class="k">Net Cash (Est.)</span><span class="v">+$2.5B</span></div>
+      <div class="vl hi"><span class="k">→ Implied Equity</span><span class="v">~$112B</span></div>
+      <div class="vup">UPSIDE FROM $60B<span class="ups">+87%</span></div>
+      <div style="margin-top:14px;font-size:9px;color:var(--dim);line-height:1.6">Fury wins CCA · Full IVAS 121K-unit run · Replicator at scale · IPO at software premium</div>
+    </div>
+  </div>
+  <div class="vnote"><strong style="color:var(--gold)">PEER CONTEXT:</strong> Palantir (PLTR) ~75× NTM revenue. Defense primes (LMT, NOC, RTX) at 1.5–2.5×. Anduril at 14× reflects its hybrid identity. As Lattice recurring revenue grows, multiple expansion toward software comps is the primary bull thesis lever.</div>
+</section>
+
+<!-- THESIS -->
+<section class="sect">
+  <div class="shd"><span class="snum">04</span><h2 class="stitle">Investment Thesis</h2></div>
+  <div class="tg">
+    <div class="tc2">
+      <div class="th g">Bull Thesis</div>
+      <ul class="tl">
+        <li><strong>Arsenal-1 as Manufacturing Moat</strong>No other defense tech startup has committed $1B+ to a 5M sq ft autonomous weapons factory. Production scale creates cost advantages 5–10 years ahead of any VC-backed competitor.</li>
+        <li><strong>Lattice as Platform Lock-in</strong>The Army's $20B enterprise contract consolidates 120+ procurement actions under one Anduril relationship — the definition of platform stickiness.</li>
+        <li><strong>Revenue Inflection with No Ceiling</strong>$236M → $500M → $1B → $2.1B in four years. $20B Army + $22B IVAS provide years of highly visible revenue.</li>
+        <li><strong>Structural Geopolitical Tailwind</strong>Pentagon Replicator, China threat, NATO 2%+ commitments create multi-decade demand for exactly what Anduril builds.</li>
+      </ul>
+    </div>
+    <div class="tc2 b">
+      <div class="th r">Bear Thesis</div>
+      <ul class="tl">
+        <li><strong>Deep and Growing Losses</strong>&gt;$800M net loss on ~$1B revenue is −80%+ operating margin. Path to profitability requires Arsenal-1 to produce at volume — execution risk is enormous.</li>
+        <li><strong>IVAS is a Historically Cursed Program</strong>Microsoft struggled with IVAS for years before losing it. Delivering 121K combat-ready AR headsets is a deeply difficult engineering challenge.</li>
+        <li><strong>Concentrated Contract Risk</strong>A handful of mega-contracts dominate revenue. Loss or delay of Army, IVAS, or USMC awards could materially impair the growth story.</li>
+        <li><strong>$60B Not Cheap at 14× 2026E</strong>Prices in aggressive execution with zero margin for error. DOGE-style budget compression would reprice sharply.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RISK -->
+<section class="sect">
+  <div class="shd"><span class="snum">05</span><h2 class="stitle">Risk Matrix</h2></div>
+  <table class="rt">
+    <thead><tr><th style="width:220px">Risk Factor</th><th style="width:72px">Severity</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><div class="rn">Arsenal-1 Execution</div></td><td><span class="sev H">HIGH</span></td><td><div class="rd">Scaling a greenfield 5M sq ft weapons factory from zero is a once-in-a-generation manufacturing challenge. Production delays for Fury, Roadrunner, and Barracuda directly impair 2026 revenue guidance of $4.3B.</div></td></tr>
+      <tr><td><div class="rn">IVAS Combat Test Failure</div></td><td><span class="sev H">HIGH</span></td><td><div class="rd">The Army must pass IVAS through high-stress operational combat tests before authorizing full-rate production of up to 121,000 units. Test failure triggers program restructuring and material revenue delay.</div></td></tr>
+      <tr><td><div class="rn">Defense Budget / DOGE</div></td><td><span class="sev H">HIGH</span></td><td><div class="rd">Political efforts to cut federal spending could impair DoD procurement. The $20B Army and $22B IVAS programs could face reduced annual appropriations, slowing draw-down rates against contract ceilings.</div></td></tr>
+      <tr><td><div class="rn">CCA Competition Loss</div></td><td><span class="sev M">MED</span></td><td><div class="rd">Fury (YFQ-44A) competes against General Atomics YFQ-42A for the USAF CCA program. A loss removes a major revenue catalyst but leaves the broader Lattice platform and other contract vehicles intact.</div></td></tr>
+      <tr><td><div class="rn">Burn Rate / Liquidity</div></td><td><span class="sev M">MED</span></td><td><div class="rd">$800M+ annual losses + Arsenal-1 capex = rapid capital consumption. Relies on continued high-valuation private fundraising. A market turn could force dilutive raises at lower marks.</div></td></tr>
+      <tr><td><div class="rn">Geopolitical De-Escalation</div></td><td><span class="sev M">MED</span></td><td><div class="rd">Diplomatic resolution in Ukraine, Taiwan Strait, or Middle East could reduce urgency around autonomous defense procurement — compressing multiples and delaying contract timelines.</div></td></tr>
+      <tr><td><div class="rn">Key Person / Founder Risk</div></td><td><span class="sev L">LOW</span></td><td><div class="rd">Palmer Luckey's public profile and Washington relationships are brand assets. His departure would create reputational overhang, though management depth is substantial.</div></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CATALYSTS -->
+<section class="sect">
+  <div class="shd"><span class="snum">06</span><h2 class="stitle">Catalysts — Recent &amp; Upcoming</h2></div>
+  <div class="clist">
+    <div class="cit"><div class="cdt">Mar 2026</div><div class="cb"><div class="cn">$20B U.S. Army Enterprise Contract Awarded</div><div class="cd">Army consolidated 120+ procurement actions into a 10-year Lattice enterprise deal — the largest in Anduril history and clearest validation of Lattice as DoD's autonomous systems C2 standard.</div><span class="ct co">Contract</span></div></div>
+    <div class="cit"><div class="cdt">Mar 2026</div><div class="cb"><div class="cn">Fury Production Line Operational at Arsenal-1</div><div class="cd">Breaking Defense reported Arsenal-1's Fury line is manufacturing autonomous combat drones. Capacity: 150 aircraft/year at three shifts — first high-rate production of an AI-native combat aircraft in U.S. history.</div><span class="ct cfa">Facility</span></div></div>
+    <div class="cit"><div class="cdt">Mar 2026</div><div class="cb"><div class="cn">$4B Round at $60B Valuation Reported</div><div class="cd">a16z and Thrive Capital reportedly leading a $4B raise at $60B valuation — doubling from June 2025 in 9 months and positioning Anduril as the most valuable private defense contractor in the U.S.</div><span class="ct cf">Financial</span></div></div>
+    <div class="cit"><div class="cdt">Oct 2025</div><div class="cb"><div class="cn">YFQ-44A "Fury" Maiden Flight Completed</div><div class="cd">Fury first flight Oct 31, 2025. Now in active competition with General Atomics YFQ-42A for the Air Force Collaborative Combat Aircraft program — potentially worth tens of billions.</div><span class="ct cp">Product</span></div></div>
+    <div class="cit"><div class="cdt">Aug 2025</div><div class="cb"><div class="cn">Mississippi SRM Factory Opens</div><div class="cd">Anduril becomes U.S.'s 3rd solid rocket motor supplier alongside Northrop Grumman and L3Harris. Target: 6,000 tactical motors/year by end of 2026. Full vertical integration of propulsion supply chain.</div><span class="ct cfa">Facility</span></div></div>
+    <div class="cit"><div class="cdt">Feb 2025</div><div class="cb"><div class="cn">IVAS Program Takeover from Microsoft</div><div class="cd">Anduril assumed development and production of Army's Integrated Visual Augmentation System. $22B ceiling. Up to 121,000 AR/VR headsets for soldiers pending high-stress combat test approval.</div><span class="ct co">Contract</span></div></div>
+    <div class="cit"><div class="cdt">Upcoming</div><div class="cb"><div class="cn">USAF CCA Program Award Decision</div><div class="cd">Air Force final CCA decision expected 2026–2027 (Fury YFQ-44A vs. GA YFQ-42A). A Fury win would be the largest single autonomous airpower contract in history.</div><span class="ct co">Contract</span></div></div>
+    <div class="cit"><div class="cdt">Upcoming</div><div class="cb"><div class="cn">IPO Expected 2026–2027</div><div class="cd">Anduril widely expected to go public. The $60B private valuation benchmarks any IPO pricing. Listing provides true mark-to-market valuation and employee liquidity event.</div><span class="ct cf">Financial</span></div></div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<div class="sw">
+  <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:32px">
+    <span style="font-size:9px;letter-spacing:.2em;color:var(--gold)">07</span>
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:24px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper)">Sources &amp; Verification</h2>
+  </div>
+  <div class="sl2">
+    <div class="si"><span class="sn">[1]</span><span>Sacra — "Anduril revenue, valuation &amp; funding" — <a href="https://sacra.com/c/anduril/" target="_blank" rel="nofollow">sacra.com/c/anduril</a> — Feb 2026</span></div>
+    <div class="si"><span class="sn">[2]</span><span>TechCrunch — "Anduril raises $2.5B at $30.5B valuation" — <a href="https://techcrunch.com/2025/06/05/anduril-raises-2-5b-at-30-5b-valuation-led-by-founders-fund/" target="_blank" rel="nofollow">techcrunch.com</a> — Jun 2025</span></div>
+    <div class="si"><span class="sn">[3]</span><span>CNBC — "Anduril raises funding at $30.5B valuation" — <a href="https://www.cnbc.com/2025/06/05/anduril-valuation-founders-fund.html" target="_blank" rel="nofollow">cnbc.com</a> — Jun 2025</span></div>
+    <div class="si"><span class="sn">[4]</span><span>DefenseScoop — "Army awards Anduril $20B contract" — <a href="https://defensescoop.com/2026/03/14/anduril-20-billion-dollar-army-contract/" target="_blank" rel="nofollow">defensescoop.com</a> — Mar 2026</span></div>
+    <div class="si"><span class="sn">[5]</span><span>Breaking Defense — "As Fury production starts, Arsenal-1" — <a href="https://breakingdefense.com/2026/03/as-fury-production-starts-anduril-pledging-a-different-production-approach-at-arsenal-1/" target="_blank" rel="nofollow">breakingdefense.com</a> — Mar 2026</span></div>
+    <div class="si"><span class="sn">[6]</span><span>Bloomberg — "US Army Awards Anduril Contract Worth Up to $20B" — bloomberg.com — Mar 2026</span></div>
+    <div class="si"><span class="sn">[7]</span><span>Acquinox Capital — "Anduril Investor Insights" — <a href="https://acquinox.capital/insights/space-and-defense-tech/anduril-industries-investor-insights-rewriting-the-defence-industrial-base-at-a-30-5-billion-valuation" target="_blank" rel="nofollow">acquinox.capital</a> — Feb 2026</span></div>
+    <div class="si"><span class="sn">[8]</span><span>Tech Market Briefs — "Anduril IPO 2026: $60B Valuation" — <a href="https://techmarketbriefs.com/pre-ipo/anduril/" target="_blank" rel="nofollow">techmarketbriefs.com</a> — May 2026</span></div>
+    <div class="si"><span class="sn">[9]</span><span>Wikipedia — "Anduril Industries" — <a href="https://en.wikipedia.org/wiki/Anduril_Industries" target="_blank" rel="nofollow">wikipedia.org</a></span></div>
+    <div class="si"><span class="sn">[10]</span><span>Anduril Press Releases — <a href="https://www.anduril.com/news" target="_blank" rel="nofollow">anduril.com/news</a></span></div>
+  </div>
+  <div style="font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)"><span style="color:var(--gold)">// </span>VERIFICATION LOG</div>
+  <table class="vt">
+    <thead><tr><th>Field</th><th>Value Used</th><th>Source(s)</th><th>Period</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>2024 Revenue</td><td>~$1.0B</td><td>[2][3][8]</td><td>FY2024</td><td class="ok">✓ CONFIRMED</td></tr>
+      <tr><td>2025 Revenue</td><td>~$2.1B</td><td>[1] Sacra; [8] ~$2.15B</td><td>FY2025E</td><td class="est">~ ESTIMATE</td></tr>
+      <tr><td>2026 Revenue Proj.</td><td>$4.3B</td><td>[1][8] — co. guidance</td><td>FY2026P</td><td class="ok">✓ CO. GUIDANCE</td></tr>
+      <tr><td>Latest Valuation</td><td>$60.0B</td><td>[8][9] — a16z + Thrive</td><td>Mar 2026</td><td class="ok">✓ CONFIRMED</td></tr>
+      <tr><td>Army Contract</td><td>$20B / 10yr</td><td>[4][6]</td><td>Mar 2026</td><td class="ok">✓ CONFIRMED</td></tr>
+      <tr><td>IVAS Value</td><td>$22B</td><td>[2][3][7]</td><td>Feb 2025</td><td class="ok">✓ CONFIRMED</td></tr>
+      <tr><td>Total Funding</td><td>$6.9B</td><td>premieralts / tracxn</td><td>2026</td><td class="ok">✓ CONFIRMED</td></tr>
+      <tr><td>Net Loss</td><td>&gt;$800M</td><td>[1] Sacra estimate</td><td>FY2024E</td><td class="est">~ ESTIMATE</td></tr>
+      <tr><td>Cash on Balance Sheet</td><td>~$750M</td><td>[1] Q1'24 estimate</td><td>Q1 2024</td><td style="color:var(--dim);font-size:9px">⚠ STALE</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:28px;padding:14px 18px;border:1px solid var(--rail);background:var(--plate)">
+    <p style="font-size:9px;color:var(--dim);line-height:1.7"><strong style="color:var(--gold)">NOTE:</strong> Prepared for interview research — Program Financial Analyst, Autonomous Airpower at Anduril Industries. All revenue figures are third-party estimates. Anduril does not publicly disclose financials as a private company. Valuation figures reflect reported funding round pricing. This does not constitute investment advice.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>ANDURIL INDUSTRIES — PRIVATE INTELLIGENCE BRIEF — MAY 2026</span>
+  <a href="https://colinormsby.github.io/" class="bk" rel="nofollow">← colinormsby.github.io</a>
+  <span id="ts"></span>
+</footer>
+
+<script>
+document.getElementById('ts').textContent='PREPARED: '+new Date('2026-05-12').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}).toUpperCase();
+
+// Text scramble
+const CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!%&';
+const el=document.getElementById('scr');
+const FINAL='DEFENSE';
+let frame=0;const total=35;
+const iv=setInterval(()=>{
+  el.textContent=FINAL.split('').map((c,i)=>frame/total>i/FINAL.length?c:CHARS[Math.floor(Math.random()*CHARS.length)]).join('');
+  frame++;if(frame>=total){el.textContent=FINAL;clearInterval(iv);}
+},40);
+
+// Spotlight radial gradient on HUD cells
+document.querySelectorAll('.hc').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.background=`radial-gradient(circle at ${e.clientX-r.left}px ${e.clientY-r.top}px,rgba(200,168,107,.08) 0%,var(--void) 65%)`;
+  });
+  c.addEventListener('mouseleave',()=>{c.style.background='';});
+});
+</script>
+</body>
+</html>
